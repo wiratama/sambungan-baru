@@ -1,0 +1,21 @@
+.suggestions_kode_post, .suggestions_jalan {
+    padding: 0 0px 10px 10px;
+    display: none;
+    width: 339px;
+    height: 200px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    border-top: 0;
+    background: #fff;
+    position: absolute;
+}
+
+ul.list_kode_post li {
+    cursor: pointer;
+    list-style: none;
+}
+
+ul.list_jalan li {
+    cursor: pointer;
+    list-style: none;
+}
