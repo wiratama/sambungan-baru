@@ -6,7 +6,7 @@
  * @package Package
  * @subpackage Sub Package
  */
-class Form_Handler_Sambungan {
+class Form_Handler {
 
     /**
      * Hook 'em all
@@ -21,11 +21,11 @@ class Form_Handler_Sambungan {
      * @return void
      */
     public function handle_form() {
-        if ( ! isset( $_POST['submit_sambunganbaru'] ) ) {
+        if ( ! isset( $_POST['submit_sambungan'] ) ) {
             return;
         }
 
-        if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'sambunganbaru-new' ) ) {
+        if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'sambungan-new' ) ) {
             die( __( 'Are you cheating?', 'arwir' ) );
         }
 
@@ -62,7 +62,7 @@ class Form_Handler_Sambungan {
         }
 
         if ( ! $alamat_lengkap ) {
-            $errors[] = __( 'Error: Alamat Lengkap is required', 'arwir' );
+            $errors[] = __( 'Error: Alamat_lengkap is required', 'arwir' );
         }
 
         if ( ! $kelurahan ) {
@@ -70,7 +70,7 @@ class Form_Handler_Sambungan {
         }
 
         if ( ! $kode_pos ) {
-            $errors[] = __( 'Error: Kode Pos is required', 'arwir' );
+            $errors[] = __( 'Error: Kode_pos is required', 'arwir' );
         }
 
         if ( ! $area_kota ) {
@@ -96,6 +96,10 @@ class Form_Handler_Sambungan {
         if ( ! $fungsi_bangunan ) {
             $errors[] = __( 'Error: Fungsi Bangunan is required', 'arwir' );
         }
+
+        /*var_dump($_POST);
+        var_dump($errors);
+        die();*/
 
         // bail out if error found
         if ( $errors ) {
@@ -125,13 +129,13 @@ class Form_Handler_Sambungan {
         // New or edit?
         if ( ! $field_id ) {
 
-            $insert_id = sambunganbaru_insert_sambungan( $fields );
+            $insert_id = sambungan_insert_sambungan( $fields );
 
         } else {
 
             $fields['id'] = $field_id;
 
-            $insert_id = sambunganbaru_insert_sambungan( $fields );
+            $insert_id = sambungan_insert_sambungan( $fields );
         }
 
         if ( is_wp_error( $insert_id ) ) {
@@ -145,4 +149,4 @@ class Form_Handler_Sambungan {
     }
 }
 
-new Form_Handler_Sambungan();
+new Form_Handler();

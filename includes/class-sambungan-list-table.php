@@ -63,6 +63,15 @@ class Sambunganbaru_List_Table extends \WP_List_Table {
                 return $item->kode_pos;
 
             case 'area_kota':
+                if ($item->area_kota=='1') {
+                    $item->area_kota='Jakarta Barat';
+                } else if ($item->area_kota=='2') {
+                    $item->area_kota='Jakarta Selatan';
+                } else if ($item->area_kota=='3') {
+                    $item->area_kota='Jakarta Pusat';
+                } else if ($item->area_kota=='4') {
+                    $item->area_kota='Jakarta Utara';
+                }
                 return $item->area_kota;
 
             case 'luas_bangunan':
@@ -98,18 +107,18 @@ class Sambunganbaru_List_Table extends \WP_List_Table {
             'cb'           => '<input type="checkbox" />',
             'nama_lengkap'      => __( 'Nama Lengkap', 'arwir' ),
             'jalan'      => __( 'Jalan', 'arwir' ),
-            'alamat_lengkap'      => __( 'Alamat Lengkap', 'arwir' ),
-            'rt_rw'      => __( 'RT/RW', 'arwir' ),
+            // 'alamat_lengkap'      => __( 'Alamat_lengkap', 'arwir' ),
+            // 'rt_rw'      => __( 'RT/RW', 'arwir' ),
             'kecamatan'      => __( 'Kecamatan', 'arwir' ),
             'kelurahan'      => __( 'Kelurahan', 'arwir' ),
-            'kode_pos'      => __( 'Kode Pos', 'arwir' ),
+            'kode_pos'      => __( 'Kode_pos', 'arwir' ),
             'area_kota'      => __( 'Area Kota', 'arwir' ),
-            'luas_bangunan'      => __( 'Luas Bangunan', 'arwir' ),
-            'jumlah_penghuni'      => __( 'Jumlah Penghuni', 'arwir' ),
+            // 'luas_bangunan'      => __( 'Luas Bangunan', 'arwir' ),
+            // 'jumlah_penghuni'      => __( 'Jumlah Penghuni', 'arwir' ),
             'telepon'      => __( 'Telepon', 'arwir' ),
             'telepon_genggam'      => __( 'Telepon Genggam', 'arwir' ),
-            'email'      => __( 'Email', 'arwir' ),
-            'fungsi_bangunan'      => __( 'Fungsi Bangunan', 'arwir' ),
+            // 'email'      => __( 'Email', 'arwir' ),
+            // 'fungsi_bangunan'      => __( 'Fungsi Bangunan', 'arwir' ),
 
         );
 
@@ -126,10 +135,10 @@ class Sambunganbaru_List_Table extends \WP_List_Table {
     function column_nama_lengkap( $item ) {
 
         $actions           = array();
-        $actions['edit']   = sprintf( '<a href="%s" data-id="%d" title="%s">%s</a>', admin_url( 'admin.php?page=&action=edit&id=' . $item->id ), $item->id, __( 'Edit this item', 'arwir' ), __( 'Edit', 'arwir' ) );
-        $actions['delete'] = sprintf( '<a href="%s" class="submitdelete" data-id="%d" title="%s">%s</a>', admin_url( 'admin.php?page=&action=delete&id=' . $item->id ), $item->id, __( 'Delete this item', 'arwir' ), __( 'Delete', 'arwir' ) );
+        $actions['edit']   = sprintf( '<a href="%s" data-id="%d" title="%s">%s</a>', admin_url( 'admin.php?page=sambungan-baru&action=edit&id=' . $item->id ), $item->id, __( 'Edit this item', 'arwir' ), __( 'Edit', 'arwir' ) );
+        $actions['delete'] = sprintf( '<a href="%s" class="submitdelete" data-id="%d" title="%s">%s</a>', admin_url( 'admin.php?page=sambungan-baru&action=delete&id=' . $item->id ), $item->id, __( 'Delete this item', 'arwir' ), __( 'Delete', 'arwir' ) );
 
-        return sprintf( '<a href="%1$s"><strong>%2$s</strong></a> %3$s', admin_url( 'admin.php?page=&action=view&id=' . $item->id ), $item->nama_lengkap, $this->row_actions( $actions ) );
+        return sprintf( '<a href="%1$s"><strong>%2$s</strong></a> %3$s', admin_url( 'admin.php?page=sambungan-baru&action=view&id=' . $item->id ), $item->nama_lengkap, $this->row_actions( $actions ) );
     }
 
     /**
@@ -215,10 +224,10 @@ class Sambunganbaru_List_Table extends \WP_List_Table {
             $args['order']   = $_REQUEST['order'] ;
         }
 
-        $this->items  = sambunganbaru_get_all_sambungan( $args );
+        $this->items  = sambungan_get_all_sambungan( $args );
 
         $this->set_pagination_args( array(
-            'total_items' => sambunganbaru_get_sambungan_count(),
+            'total_items' => sambungan_get_sambungan_count(),
             'per_page'    => $per_page
         ) );
     }

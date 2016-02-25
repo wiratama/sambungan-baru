@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2016 at 05:19 AM
+-- Generation Time: Feb 25, 2016 at 07:58 AM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -26,8 +26,9 @@ SET time_zone = "+00:00";
 -- Table structure for table `palyja_sambungan_baru`
 --
 
+DROP TABLE IF EXISTS `palyja_sambungan_baru`;
 CREATE TABLE IF NOT EXISTS `palyja_sambungan_baru` (
-`ID` int(11) NOT NULL,
+`id` int(11) NOT NULL,
   `nama_lengkap` varchar(255) NOT NULL,
   `jalan` varchar(255) NOT NULL,
   `alamat_lengkap` text NOT NULL,
@@ -41,8 +42,16 @@ CREATE TABLE IF NOT EXISTS `palyja_sambungan_baru` (
   `telepon` varchar(255) NOT NULL,
   `telepon_genggam` varchar(255) NOT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `fungsi_bangunan` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `fungsi_bangunan` varchar(255) NOT NULL,
+  `date` datetime NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `palyja_sambungan_baru`
+--
+
+INSERT INTO `palyja_sambungan_baru` (`id`, `nama_lengkap`, `jalan`, `alamat_lengkap`, `rt_rw`, `kecamatan`, `kelurahan`, `kode_pos`, `area_kota`, `luas_bangunan`, `jumlah_penghuni`, `telepon`, `telepon_genggam`, `email`, `fungsi_bangunan`, `date`) VALUES
+(1, 'Lorem dolor', 'Semanan Raya', 'TSI NH 2', '', 'Cengkareng', 'Duri Kosambi', '11750', '1', 150, 5, '12345678', '11223344555', 'arya@maxsolution.co.id', 'Rumah Tangga', '2016-02-25 06:51:44');
 
 --
 -- Indexes for dumped tables
@@ -52,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `palyja_sambungan_baru` (
 -- Indexes for table `palyja_sambungan_baru`
 --
 ALTER TABLE `palyja_sambungan_baru`
- ADD PRIMARY KEY (`ID`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -62,7 +71,7 @@ ALTER TABLE `palyja_sambungan_baru`
 -- AUTO_INCREMENT for table `palyja_sambungan_baru`
 --
 ALTER TABLE `palyja_sambungan_baru`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -1,7 +1,7 @@
 <div class="wrap">
     <h1><?php _e( 'Add New Item', 'arwir' ); ?></h1>
 
-    <?php $item = sambunganbaru_get_sambungan( $id ); ?>
+    <?php $item = sambungan_get_sambungan( $id ); ?>
 
     <form action="" method="post">
 
@@ -57,7 +57,7 @@
                 </tr>
                 <tr class="row-kode-pos">
                     <th scope="row">
-                        <label for="kode_pos"><?php _e( 'Kode Pos', 'arwir' ); ?></label>
+                        <label for="kode_pos"><?php _e( 'Kode_pos', 'arwir' ); ?></label>
                     </th>
                     <td>
                         <input type="text" name="kode_pos" id="kode_pos" class="regular-text" placeholder="<?php echo esc_attr( '', 'arwir' ); ?>" value="<?php echo esc_attr( $item->kode_pos ); ?>" required="required" />
@@ -68,7 +68,13 @@
                         <label for="area_kota"><?php _e( 'Area Kota', 'arwir' ); ?></label>
                     </th>
                     <td>
-                        <input type="text" name="area_kota" id="area_kota" class="regular-text" placeholder="<?php echo esc_attr( '', 'arwir' ); ?>" value="<?php echo esc_attr( $item->area_kota ); ?>" required="required" />
+                        <select name="area_kota" id="area_kota" required="required">
+                            <option value=""><?php echo __( 'Select One', 'arwir' ); ?></option>
+                            <option value="1" <?php selected( $item->area_kota, 1 ); ?>>Jakarta Barat</option>
+                            <option value="2" <?php selected( $item->area_kota, 2 ); ?>>Jakarta Selatan</option>
+                            <option value="3" <?php selected( $item->area_kota, 3 ); ?>>Jakarta Pusat</option>
+                            <option value="4" <?php selected( $item->area_kota, 4 ); ?>>Jakarta Utara</option>
+                        </select>
                     </td>
                 </tr>
                 <tr class="row-luas-bangunan">
@@ -116,7 +122,12 @@
                         <label for="fungsi_bangunan"><?php _e( 'Fungsi Bangunan', 'arwir' ); ?></label>
                     </th>
                     <td>
-                        <input type="text" name="fungsi_bangunan" id="fungsi_bangunan" class="regular-text" placeholder="<?php echo esc_attr( '', 'arwir' ); ?>" value="<?php echo esc_attr( $item->fungsi_bangunan ); ?>" required="required" />
+                        <select name="fungsi_bangunan" id="fungsi_bangunan" required="required">
+                            <option value=""><?php echo __( 'Select One', 'arwir' ); ?></option>
+                            <option value="" <?php selected( $item->fungsi_bangunan, 'Sosial' ); ?>><?php echo __( 'Sosial', 'arwir' ); ?></option>
+                            <option value="" <?php selected( $item->fungsi_bangunan, 'Rumah Tangga' ); ?>><?php echo __( 'Rumah Tangga', 'arwir' ); ?></option>
+                            <option value="" <?php selected( $item->fungsi_bangunan, 'omersial' ); ?>><?php echo __( 'omersial', 'arwir' ); ?></option>
+                        </select>
                     </td>
                 </tr>
              </tbody>
@@ -124,8 +135,8 @@
 
         <input type="hidden" name="field_id" value="<?php echo $item->id; ?>">
 
-        <?php wp_nonce_field( 'sambunganbaru-new' ); ?>
-        <?php submit_button( __( 'Update Item', 'arwir' ), 'primary', 'submit_sambunganbaru' ); ?>
+        <?php wp_nonce_field( 'sambungan-new' ); ?>
+        <?php submit_button( __( 'Update item', 'arwir' ), 'primary', 'submit_sambungan' ); ?>
 
     </form>
 </div>

@@ -3,7 +3,7 @@
 /**
  * Admin Menu
  */
-class Sambunganbaru_Admin_menu {
+class Sambunganbaru_Admin_Menu {
 
     /**
      * Kick-in the class
@@ -33,6 +33,7 @@ class Sambunganbaru_Admin_menu {
     public function plugin_page() {
         $action = isset( $_GET['action'] ) ? $_GET['action'] : 'list';
         $id     = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
+
         switch ($action) {
             case 'view':
 
