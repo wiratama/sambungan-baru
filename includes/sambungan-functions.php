@@ -142,3 +142,9 @@ function sambungan_insert_sambungan( $args = array() ) {
 
     return false;
 }
+
+function sambungan_delete_sambungan( $id = 0 ) {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'sambungan_baru';
+    $wpdb->delete( $table_name, array( 'id' => $id ) );
+}

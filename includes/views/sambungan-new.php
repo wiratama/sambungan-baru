@@ -137,7 +137,7 @@
         <input type="hidden" name="field_id" value="0">
 
         <?php wp_nonce_field( 'sambungan-new' ); ?>
-        <?php submit_button( __( 'Add item', 'arwir' ), 'primary', 'submit_sambungan' ); ?>
+        <?php submit_button( __( 'Add item', 'arwir' ), 'primary', 'kode_pos' ); ?>
 
     </form>
 </div>
@@ -192,20 +192,25 @@ jQuery(document).ready(function($){
         var list_zip ='';
         $(this).next().show().empty();
 
-        for(var i in z){
-            if(i.substr(0,length) == val) {
-                list_zip += '<li>'+i+', '+z[i]['d']+'</li>';
-            }
-        }
+        jQuery.ajax({
+            type: "POST",
+            url: "<?=admin_url( 'admin-ajax.php');?>",
+            data: 'b_kode_pos='+val,
+            success: function(data) {
+                $.each(data, function (index, valuedt) {
+                  list_zip += '<li>'+valuedt['zip']+', '+valuedt['district']+'</li>';
+                });
 
-        if(list_zip != '') {
-            html_el += ''+list_zip+'';
-        } else {
-            html_el+='<li> -- Empty -- </li>';
-        }
+                if(list_zip != '') {
+                    html_el += ''+list_zip+'';
+                } else {
+                    html_el+='<li> -- Empty -- </li>';
+                }
 
-        html_el +="</ul>";
-        $(this).next().html(html_el);
+                html_el +="</ul>";
+                $('#kode_pos').next().html(html_el);
+            },
+        });
     });
 
     $('ul.list_kode_post li').live('click ',function(){
@@ -235,24 +240,27 @@ jQuery(document).ready(function($){
         $(this).next().show().empty();
         var list_jalan='';
         var kode_post = $('#kode_pos').val();
-        var html_el = '<ul class="list_jalan">'; 
-        
-        for(var i =0; i!=z[kode_post]['s'].length; i++) {
-            var y = z[kode_post]['s'][i].toLowerCase();
-            
-            if(y.substr(0,length) == val) { 
-                list_jalan += '<li>'+z[kode_post]['s'][i]+'</li>';
-            }
-        }
+        var html_el = '<ul class="list_jalan">';
 
-        if(list_jalan == '') { 
-            html_el += '<li> -- Empty -- </li>';
-        } else {
-            html_el += ''+list_jalan+'';
-        }
+        jQuery.ajax({
+            type: "POST",
+            url: "<?=admin_url( 'admin-ajax.php');?>",
+            data: 'b_street='+val+'&b_kode_post='+kode_post,
+            success: function(data) {
+                $.each(data, function (index, valuedt) {
+                    list_jalan += '<li>'+valuedt['street_name']+'</li>';
+                });
 
-        html_el +="</ul>";
-        $(this).next().html(html_el); 
+                if(list_jalan == '') { 
+                    html_el += '<li> -- Empty -- </li>';
+                } else {
+                    html_el += ''+list_jalan+'';
+                }
+
+                html_el +="</ul>";
+                $('#jalan').next().html(html_el);
+            },
+        });         
     });
 
     $('ul.list_jalan li').live('click ',function(){
