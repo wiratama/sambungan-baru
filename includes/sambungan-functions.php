@@ -148,3 +148,27 @@ function sambungan_delete_sambungan( $id = 0 ) {
     $table_name = $wpdb->prefix . 'sambungan_baru';
     $wpdb->delete( $table_name, array( 'id' => $id ) );
 }
+
+
+function sambungan_get_all_sambungan_filter( $args = array() ) {
+    global $wpdb;
+
+    $defaults = array(
+        'number'     => 20,
+        'offset'     => 0,
+        'orderby'    => 'id',
+        'order'      => 'ASC',
+    );
+
+    $args      = wp_parse_args( $args, $defaults );
+    $cache_key = 'sambungan-all';
+    $items     = wp_cache_get( $cache_key, 'arwir' );
+
+    if ( false === $items ) {
+        $items = $wpdb->get_results( 'SELECT * FROM ' . $wpdb->prefix . 'sambungan_baru WHERE `nama_lengkap` LIKE "'.$args['s'].'%" ORDER BY ' . $args['orderby'] .' ' . $args['order'] .' LIMIT ' . $args['offset'] . ', ' . $args['number'] );
+
+        wp_cache_set( $cache_key, $items, 'arwir' );
+    }
+
+    return $items;
+}

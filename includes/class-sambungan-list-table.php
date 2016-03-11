@@ -104,7 +104,7 @@ class Sambunganbaru_List_Table extends \WP_List_Table {
      */
     function get_columns() {
         $columns = array(
-            'cb'           => '<input type="checkbox" />',
+            // 'cb'           => '<input type="checkbox" />',
             'nama_lengkap'      => __( 'Nama Lengkap', 'arwir' ),
             'jalan'      => __( 'Jalan', 'arwir' ),
             // 'alamat_lengkap'      => __( 'Alamat_lengkap', 'arwir' ),
@@ -159,12 +159,13 @@ class Sambunganbaru_List_Table extends \WP_List_Table {
      *
      * @return array
      */
-    function get_bulk_actions() {
+    /*function get_bulk_actions() {
         $actions = array(
-            'trash'  => __( 'Move to Trash', 'arwir' ),
+            // 'trash'  => __( 'Move to Trash', 'arwir' ),
+            'delete'  => __( 'Delete', 'arwir' ),
         );
         return $actions;
-    }
+    }*/
 
     /**
      * Render the checkbox column
@@ -173,11 +174,11 @@ class Sambunganbaru_List_Table extends \WP_List_Table {
      *
      * @return string
      */
-    function column_cb( $item ) {
+    /*function column_cb( $item ) {
         return sprintf(
             '<input type="checkbox" name="sambungan_id[]" value="%d" />', $item->id
         );
-    }
+    }*/
 
     /**
      * Set the views
@@ -224,7 +225,12 @@ class Sambunganbaru_List_Table extends \WP_List_Table {
             $args['order']   = $_REQUEST['order'] ;
         }
 
-        $this->items  = sambungan_get_all_sambungan( $args );
+        if($_GET["s"]) {
+            $args['s']=sanitize_text_field($_GET['s']);
+            $this->items  = sambungan_get_all_sambungan_filter( $args );
+        } else {
+            $this->items  = sambungan_get_all_sambungan( $args );
+        }
 
         $this->set_pagination_args( array(
             'total_items' => sambungan_get_sambungan_count(),

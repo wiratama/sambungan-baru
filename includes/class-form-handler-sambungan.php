@@ -97,10 +97,6 @@ class Form_Handler {
             $errors[] = __( 'Error: Fungsi Bangunan is required', 'arwir' );
         }
 
-        /*var_dump($_POST);
-        var_dump($errors);
-        die();*/
-
         // bail out if error found
         if ( $errors ) {
             $first_error = reset( $errors );

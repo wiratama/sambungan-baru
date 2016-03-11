@@ -50,6 +50,7 @@ class Sambunganbaru_Admin_Menu {
 
             case 'delete':
                 sambungan_delete_sambungan($id);
+                $template = dirname( __FILE__ ) . '/views/sambungan-list.php';
                 wp_safe_redirect( admin_url( 'admin.php?page=sambungan-baru' ) );
                 break;
 

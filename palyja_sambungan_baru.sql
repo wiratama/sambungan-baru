@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2016 at 07:58 AM
+-- Generation Time: Mar 11, 2016 at 08:43 AM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -44,14 +44,7 @@ CREATE TABLE IF NOT EXISTS `palyja_sambungan_baru` (
   `email` varchar(50) DEFAULT NULL,
   `fungsi_bangunan` varchar(255) NOT NULL,
   `date` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `palyja_sambungan_baru`
---
-
-INSERT INTO `palyja_sambungan_baru` (`id`, `nama_lengkap`, `jalan`, `alamat_lengkap`, `rt_rw`, `kecamatan`, `kelurahan`, `kode_pos`, `area_kota`, `luas_bangunan`, `jumlah_penghuni`, `telepon`, `telepon_genggam`, `email`, `fungsi_bangunan`, `date`) VALUES
-(1, 'Lorem dolor', 'Semanan Raya', 'TSI NH 2', '', 'Cengkareng', 'Duri Kosambi', '11750', '1', 150, 5, '12345678', '11223344555', 'arya@maxsolution.co.id', 'Rumah Tangga', '2016-02-25 06:51:44');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Indexes for dumped tables
@@ -71,7 +64,7 @@ ALTER TABLE `palyja_sambungan_baru`
 -- AUTO_INCREMENT for table `palyja_sambungan_baru`
 --
 ALTER TABLE `palyja_sambungan_baru`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

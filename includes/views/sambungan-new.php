@@ -21,7 +21,7 @@
                 </tr>
                 <tr class="row-kode-pos">
                     <th scope="row">
-                        <label for="kode_pos"><?php _e( 'Kode_pos', 'arwir' ); ?></label>
+                        <label for="kode_pos"><?php _e( 'Kode Pos', 'arwir' ); ?></label>
                     </th>
                     <td>
                         <input type="text" name="kode_pos" id="kode_pos" class="regular-text" placeholder="<?php echo esc_attr( '', 'arwir' ); ?>" value="" required="required" disabled="disabled"/>
@@ -75,7 +75,8 @@
                         <label for="kecamatan"><?php _e( 'Kecamatan', 'arwir' ); ?></label>
                     </th>
                     <td>
-                        <input type="text" name="kecamatan" id="kecamatan" class="regular-text sambunganbaru-field" placeholder="<?php echo esc_attr( '', 'arwir' ); ?>" value="" disabled="disabled"/>
+                        <input type="text" name="kecamatan_enl" id="kecamatan_enl" class="regular-text" placeholder="<?php echo esc_attr( '', 'arwir' ); ?>" value="" disabled="disabled"/>
+                        <input type="hidden" name="kecamatan" id="kecamatan" class="regular-text" placeholder="<?php echo esc_attr( '', 'arwir' ); ?>" value=""/>
                     </td>
                 </tr>
                 <tr class="row-luas-bangunan">
@@ -137,7 +138,7 @@
         <input type="hidden" name="field_id" value="0">
 
         <?php wp_nonce_field( 'sambungan-new' ); ?>
-        <?php submit_button( __( 'Add item', 'arwir' ), 'primary', 'kode_pos' ); ?>
+        <?php submit_button( __( 'Add item', 'arwir' ), 'primary', 'submit_sambungan' ); ?>
 
     </form>
 </div>
@@ -186,6 +187,14 @@ jQuery(document).ready(function($){
     });
 
     $('#kode_pos').keyup(function() {
+        if ($('#kode_pos').val()=='') {
+            $('#kelurahan_enl').val('');
+            $('#kelurahan').val('');
+            $('#kecamatan_enl').val('');
+            $('#kecamatan').val('');
+            $('#jalan').val('');
+        }
+
         var val = $(this).val();
         var length = val.length; 
         var html_el = '<ul class="list_kode_post">';
@@ -198,7 +207,7 @@ jQuery(document).ready(function($){
             data: 'b_kode_pos='+val,
             success: function(data) {
                 $.each(data, function (index, valuedt) {
-                  list_zip += '<li>'+valuedt['zip']+', '+valuedt['district']+'</li>';
+                  list_zip += '<li>'+valuedt['zip']+', '+valuedt['kelurahan']+', '+valuedt['kecamatan']+'</li>';
                 });
 
                 if(list_zip != '') {
@@ -213,18 +222,23 @@ jQuery(document).ready(function($){
         });
     });
 
-    $('ul.list_kode_post li').live('click ',function(){
+    // $('ul.list_kode_post li').live('click ',function(){
+    $('.suggestions_kode_post').on('click','ul.list_kode_post li',function(){
         $('#suggestions_kode_post').hide();
 
         var split_zip = $(this).html().split(', ');
         if (split_zip[0]!=" -- Empty -- ") {            
             $('#kode_pos').val(split_zip[0]);
-            $('#kelurahan_enl').val(z[split_zip[0]]['d']);
-            $('#kelurahan').val(z[split_zip[0]]['d']);
+            $('#kelurahan_enl').val(split_zip[1]);
+            $('#kecamatan_enl').val(split_zip[2]);
+            $('#kelurahan').val(split_zip[1]);
+            $('#kecamatan').val(split_zip[2]);
         } else {
             $('#kode_pos').val('');
             $('#kelurahan_enl').val('');
+            $('#kecamatan_enl').val('');
             $('#kelurahan').val('');
+            $('#kecamatan').val('');
         }
 
         if ($('#kelurahan').val()!='') {
@@ -264,6 +278,7 @@ jQuery(document).ready(function($){
     });
 
     $('ul.list_jalan li').live('click ',function(){
+    // $('.suggestions_jalan').on('click','ul.list_jalan li',function(){
         $('#suggestions_jalan').hide();
 
         if ($(this).html()!=" -- Empty -- ") {            

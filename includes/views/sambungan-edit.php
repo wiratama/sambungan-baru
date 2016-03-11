@@ -140,3 +140,156 @@
 
     </form>
 </div>
+
+<script type="text/javascript">
+jQuery(document).ready(function($){
+    $('#area_kota').change(function() {
+        if($(this).val()!='') {
+            $('#kode_pos').removeAttr('disabled');
+        } else {
+            $('#kode_pos').attr('disabled', 'disabled');
+        }
+    });
+
+    $('#kode_pos').keydown(function (e) {
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+            (e.keyCode == 65 && ( e.ctrlKey === true || e.metaKey === true ) ) || 
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                return;
+        }
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+
+    $('#telepon').keydown(function (e) {
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+            (e.keyCode == 65 && ( e.ctrlKey === true || e.metaKey === true ) ) || 
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                return;
+        }
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+
+    $('#telepon_genggam').keydown(function (e) {
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+            (e.keyCode == 65 && ( e.ctrlKey === true || e.metaKey === true ) ) || 
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                return;
+        }
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+
+    $('#kode_pos').keyup(function() {
+        if ($('#kode_pos').val()=='') {
+            $('#kelurahan_enl').val('');
+            $('#kelurahan').val('');
+            $('#kecamatan_enl').val('');
+            $('#kecamatan').val('');
+            $('#jalan').val('');
+        }
+
+        var val = $(this).val();
+        var length = val.length; 
+        var html_el = '<ul class="list_kode_post">';
+        var list_zip ='';
+        $(this).next().show().empty();
+
+        jQuery.ajax({
+            type: "POST",
+            url: "<?=admin_url( 'admin-ajax.php');?>",
+            data: 'b_kode_pos='+val,
+            success: function(data) {
+                $.each(data, function (index, valuedt) {
+                  list_zip += '<li>'+valuedt['zip']+', '+valuedt['kelurahan']+', '+valuedt['kecamatan']+'</li>';
+                });
+
+                if(list_zip != '') {
+                    html_el += ''+list_zip+'';
+                } else {
+                    html_el+='<li> -- Empty -- </li>';
+                }
+
+                html_el +="</ul>";
+                $('#kode_pos').next().html(html_el);
+            },
+        });
+    });
+
+    // $('ul.list_kode_post li').live('click ',function(){
+    $('.suggestions_kode_post').on('click','ul.list_kode_post li',function(){
+        $('#suggestions_kode_post').hide();
+
+        var split_zip = $(this).html().split(', ');
+        if (split_zip[0]!=" -- Empty -- ") {            
+            $('#kode_pos').val(split_zip[0]);
+            $('#kelurahan_enl').val(split_zip[1]);
+            $('#kecamatan_enl').val(split_zip[2]);
+            $('#kelurahan').val(split_zip[1]);
+            $('#kecamatan').val(split_zip[2]);
+        } else {
+            $('#kode_pos').val('');
+            $('#kelurahan_enl').val('');
+            $('#kecamatan_enl').val('');
+            $('#kelurahan').val('');
+            $('#kecamatan').val('');
+        }
+
+        if ($('#kelurahan').val()!='') {
+            $('#jalan').removeAttr('disabled');
+        } else {
+            $('#jalan').attr('disabled', 'disabled');
+        }
+    });
+
+    $('#jalan').keyup(function(){
+        var val = $(this).val().toLowerCase();
+        var length = val.length;
+        $(this).next().show().empty();
+        var list_jalan='';
+        var kode_post = $('#kode_pos').val();
+        var html_el = '<ul class="list_jalan">';
+
+        jQuery.ajax({
+            type: "POST",
+            url: "<?=admin_url( 'admin-ajax.php');?>",
+            data: 'b_street='+val+'&b_kode_post='+kode_post,
+            success: function(data) {
+                $.each(data, function (index, valuedt) {
+                    list_jalan += '<li>'+valuedt['street_name']+'</li>';
+                });
+
+                if(list_jalan == '') { 
+                    html_el += '<li> -- Empty -- </li>';
+                } else {
+                    html_el += ''+list_jalan+'';
+                }
+
+                html_el +="</ul>";
+                $('#jalan').next().html(html_el);
+            },
+        });         
+    });
+
+    $('ul.list_jalan li').live('click ',function(){
+    // $('.suggestions_jalan').on('click','ul.list_jalan li',function(){
+        $('#suggestions_jalan').hide();
+
+        if ($(this).html()!=" -- Empty -- ") {            
+            $('#jalan').val($(this).html());
+        } else {
+            $('#jalan').val('');
+        }
+
+        if ($('#jalan').val()!='') {
+            $('.sambunganbaru-field').removeAttr('disabled');
+        } else {
+            $('.sambunganbaru-field').attr('disabled', 'disabled');
+        }
+    });
+});
+</script>
