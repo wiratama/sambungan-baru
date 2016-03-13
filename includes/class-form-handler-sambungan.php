@@ -1,25 +1,12 @@
 <?php
 
-/**
- * Handle the form submissions
- *
- * @package Package
- * @subpackage Sub Package
- */
 class Form_Handler {
 
-    /**
-     * Hook 'em all
-     */
     public function __construct() {
         add_action( 'admin_init', array( $this, 'handle_form' ) );
+        add_action( 'admin_init', array( $this, 'handle_settings_form' ) );
     }
 
-    /**
-     * Handle the sambungan new and edit form
-     *
-     * @return void
-     */
     public function handle_form() {
         if ( ! isset( $_POST['submit_sambungan'] ) ) {
             return;
@@ -52,7 +39,6 @@ class Form_Handler {
         $email = isset( $_POST['email'] ) ? sanitize_text_field( $_POST['email'] ) : '';
         $fungsi_bangunan = isset( $_POST['fungsi_bangunan'] ) ? sanitize_text_field( $_POST['fungsi_bangunan'] ) : '';
 
-        // some basic validation
         if ( ! $nama_lengkap ) {
             $errors[] = __( 'Error: Nama Lengkap is required', 'arwir' );
         }
@@ -122,17 +108,90 @@ class Form_Handler {
             'fungsi_bangunan' => $fungsi_bangunan,
         );
 
-        // New or edit?
+        $sambunganbaru_settings =  get_option( 'sambunganbaru_settings' );
+        $kode_psb = ($sambunganbaru_settings['kode_psb'] ? $sambunganbaru_settings['kode_psb'] : 'PSB');
+        $start_psb = ($sambunganbaru_settings['start_psb'] ? $sambunganbaru_settings['start_psb'] : null);
+
         if ( ! $field_id ) {
+            $last_id=sambungan_get_last_id();
+            if($last_id->max_id==null) {
+                if ($start_psb==null) {
+                    $new_id=$kode_psb."-".sprintf("%05s", 1);
+                } else {
+                    $new_id=$kode_psb."-".sprintf("%05s", (int)$start_psb);
+                }
+            } else {
+                $data_id=(int)substr($last_id->max_id,4,5);
+                $data_id++;
+                $new_id=$kode_psb."-".sprintf("%05s", $data_id);
+            }
+
+            $fields['id']=$new_id;
+            $fields['status']="create";
 
             $insert_id = sambungan_insert_sambungan( $fields );
 
         } else {
 
             $fields['id'] = $field_id;
+            $fields['status']="create";
 
             $insert_id = sambungan_insert_sambungan( $fields );
         }
+
+        if ( is_wp_error( $insert_id ) ) {
+            $redirect_to = add_query_arg( array( 'message' => 'error' ), $page_url );
+        } else {
+            $redirect_to = add_query_arg( array( 'message' => 'success' ), $page_url );
+        }
+
+        wp_safe_redirect( $redirect_to );
+        exit;
+    }
+
+    public function handle_settings_form() {
+        // var_dump($_POST);
+        // die();
+        if ( ! isset( $_POST['submit_sambungan_settings'] ) ) {
+            return;
+        }
+
+        if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'sambungan-settings' ) ) {
+            die( __( 'Are you cheating?', 'arwir' ) );
+        }
+
+        if ( ! current_user_can( 'read' ) ) {
+            wp_die( __( 'Permission Denied!', 'arwir' ) );
+        }
+
+        $errors   = array();
+        $page_url = admin_url( 'admin.php?page=sambungan-baru&action=settings' );
+
+        $kode_psb = isset( $_POST['kode_psb'] ) ? sanitize_text_field( $_POST['kode_psb'] ) : '';
+        $start_psb = isset( $_POST['start_psb'] ) ? sanitize_text_field( $_POST['start_psb'] ) : '';
+
+        if ( ! $kode_psb ) {
+            $errors[] = __( 'Error: Kode is required', 'arwir' );
+        }
+
+        if ( ! $start_psb ) {
+            $errors[] = __( 'Error: No Mulai required', 'arwir' );
+        }
+
+        // bail out if error found
+        if ( $errors ) {
+            $first_error = reset( $errors );
+            $redirect_to = add_query_arg( array( 'error' => $first_error ), $page_url );
+            wp_safe_redirect( $redirect_to );
+            exit;
+        }
+
+        $fields = array(
+            'kode_psb'  => $kode_psb,
+            'start_psb' => $start_psb,
+        );
+
+        $insert_id = insert_settings_sambungan( $fields );
 
         if ( is_wp_error( $insert_id ) ) {
             $redirect_to = add_query_arg( array( 'message' => 'error' ), $page_url );

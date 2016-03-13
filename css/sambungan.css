@@ -23,3 +23,8 @@ ul.list_jalan li {
 ul.list_kode_post, ul.list_jalan {
     padding: 0px;
 }
+
+span.help {
+    font-size: 12px;
+    color: #898989;
+}

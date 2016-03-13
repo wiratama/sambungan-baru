@@ -23,6 +23,7 @@ class Sambunganbaru_Admin_Menu {
         add_menu_page( __( 'Sambungan Baru', 'arwir' ), __( 'Sambungan Baru', 'arwir' ), 'manage_options', 'sambungan-baru', array( $this, 'plugin_page' ), 'dashicons-groups', null );
 
         add_submenu_page( 'sambungan-baru', __( 'Sambungan Baru', 'arwir' ), __( 'Sambungan Baru', 'arwir' ), 'manage_options', 'sambungan-baru', array( $this, 'plugin_page' ) );
+        add_submenu_page( 'sambungan-baru', __( 'Settings', 'arwir' ), __( 'Settings', 'arwir' ), 'manage_options', 'sambungan-baru&action=settings', array( $this, 'plugin_page' ) );
     }
 
     /**
@@ -32,7 +33,7 @@ class Sambunganbaru_Admin_Menu {
      */
     public function plugin_page() {
         $action = isset( $_GET['action'] ) ? $_GET['action'] : 'list';
-        $id     = isset( $_GET['id'] ) ? intval( $_GET['id'] ) : 0;
+        $id     = isset( $_GET['id'] ) ? $_GET['id'] : 0;
 
         switch ($action) {
             case 'view':
@@ -52,6 +53,10 @@ class Sambunganbaru_Admin_Menu {
                 sambungan_delete_sambungan($id);
                 $template = dirname( __FILE__ ) . '/views/sambungan-list.php';
                 wp_safe_redirect( admin_url( 'admin.php?page=sambungan-baru' ) );
+                break;
+
+            case 'settings':
+                $template = dirname( __FILE__ ) . '/views/sambungan-settings.php';
                 break;
 
             default:

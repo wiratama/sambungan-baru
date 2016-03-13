@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 11, 2016 at 08:43 AM
+-- Generation Time: Mar 13, 2016 at 04:10 AM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -26,9 +26,8 @@ SET time_zone = "+00:00";
 -- Table structure for table `palyja_sambungan_baru`
 --
 
-DROP TABLE IF EXISTS `palyja_sambungan_baru`;
 CREATE TABLE IF NOT EXISTS `palyja_sambungan_baru` (
-`id` int(11) NOT NULL,
+  `id` varchar(9) NOT NULL,
   `nama_lengkap` varchar(255) NOT NULL,
   `jalan` varchar(255) NOT NULL,
   `alamat_lengkap` text NOT NULL,
@@ -44,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `palyja_sambungan_baru` (
   `email` varchar(50) DEFAULT NULL,
   `fungsi_bangunan` varchar(255) NOT NULL,
   `date` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
@@ -56,15 +55,6 @@ CREATE TABLE IF NOT EXISTS `palyja_sambungan_baru` (
 ALTER TABLE `palyja_sambungan_baru`
  ADD PRIMARY KEY (`id`);
 
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `palyja_sambungan_baru`
---
-ALTER TABLE `palyja_sambungan_baru`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

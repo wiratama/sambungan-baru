@@ -120,12 +120,14 @@ function sambungan_insert_sambungan( $args = array() ) {
     }
 
     // remove row id to determine if new or update
-    $row_id = (int) $args['id'];
-    unset( $args['id'] );
+    $row_id = $args['id'];
+    // unset( $args['id'] );
 
-    if ( ! $row_id ) {
+    // if ( ! $row_id ) {
+    if ( $args['status']=="create" ) {
 
         $args['date'] = current_time( 'mysql' );
+        unset( $args['status'] );
 
         // insert a new
         if ( $wpdb->insert( $table_name, $args ) ) {
@@ -147,6 +149,17 @@ function sambungan_delete_sambungan( $id = 0 ) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'sambungan_baru';
     $wpdb->delete( $table_name, array( 'id' => $id ) );
+}
+
+/**
+ * Fetch a single latest sambungan id from database
+ * *
+ * @return array
+ */
+function sambungan_get_last_id() {
+    global $wpdb;
+    $id=$wpdb->get_row( 'SELECT max(id) as max_id FROM ' . $wpdb->prefix . 'sambungan_baru' );
+    return $id;
 }
 
 
@@ -171,4 +184,21 @@ function sambungan_get_all_sambungan_filter( $args = array() ) {
     }
 
     return $items;
+}
+
+function insert_settings_sambungan( $fields = array() )
+{
+    global $wpdb;
+    $defaults = array(
+        'kode_psb'   => '',
+        'start_psb'  => '',
+    );
+    $value = wp_parse_args( $fields, $defaults );
+    $result =  get_option( 'sambunganbaru_settings' );
+
+    if ($result) {
+        update_option('sambunganbaru_settings',$value);
+    } else {
+        add_option( 'sambunganbaru_settings', $value);
+    }
 }
