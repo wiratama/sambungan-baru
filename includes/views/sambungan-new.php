@@ -261,7 +261,7 @@ jQuery(document).ready(function($){
         jQuery.ajax({
             type: "POST",
             url: "<?=admin_url( 'admin-ajax.php');?>",
-            data: 'b_street='+val+'&b_kode_post='+kode_post+'&area='+area,
+            data: 'b_street='+val+'&b_kode_post='+kode_post+'&b_area='+area,
             success: function(data) {
                 $.each(data, function (index, valuedt) {
                     list_jalan += '<li>'+valuedt['street_name']+'</li>';
