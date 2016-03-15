@@ -196,6 +196,7 @@ jQuery(document).ready(function($){
         }
 
         var val = $(this).val();
+        var area = $('#area_kota').val();
         var length = val.length; 
         var html_el = '<ul class="list_kode_post">';
         var list_zip ='';
@@ -204,7 +205,7 @@ jQuery(document).ready(function($){
         jQuery.ajax({
             type: "POST",
             url: "<?=admin_url( 'admin-ajax.php');?>",
-            data: 'b_kode_pos='+val,
+            data: 'b_kode_pos='+val+'&b_area='+area,
             success: function(data) {
                 $.each(data, function (index, valuedt) {
                   list_zip += '<li>'+valuedt['zip']+', '+valuedt['kelurahan']+', '+valuedt['kecamatan']+'</li>';
@@ -254,12 +255,13 @@ jQuery(document).ready(function($){
         $(this).next().show().empty();
         var list_jalan='';
         var kode_post = $('#kode_pos').val();
+        var area = $('#area_kota').val();
         var html_el = '<ul class="list_jalan">';
 
         jQuery.ajax({
             type: "POST",
             url: "<?=admin_url( 'admin-ajax.php');?>",
-            data: 'b_street='+val+'&b_kode_post='+kode_post,
+            data: 'b_street='+val+'&b_kode_post='+kode_post+'&area='+area,
             success: function(data) {
                 $.each(data, function (index, valuedt) {
                     list_jalan += '<li>'+valuedt['street_name']+'</li>';

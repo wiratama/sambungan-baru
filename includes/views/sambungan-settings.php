@@ -6,7 +6,7 @@
 ?> 
 
 <div class="wrap">
-    <h1><?php _e( 'Add New Item', 'arwir' ); ?></h1>
+    <h1><?php _e( 'Settings Sambungan Baru', 'arwir' ); ?></h1>
 
     <form action="" method="post">
 
