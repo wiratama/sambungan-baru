@@ -100,7 +100,7 @@
                         <label for="telepon"><?php _e( 'Telepon', 'arwir' ); ?></label>
                     </th>
                     <td>
-                        <input type="text" name="telepon" id="telepon" class="regular-text sambunganbaru-field" placeholder="<?php echo esc_attr( '', 'arwir' ); ?>" value="" required="required" disabled="disabled"/>
+                        <input type="text" name="telepon" id="telepon" class="regular-text sambunganbaru-field" placeholder="<?php echo esc_attr( '', 'arwir' ); ?>" value="" disabled="disabled"/>
                     </td>
                 </tr>
                 <tr class="row-telepon-genggam">

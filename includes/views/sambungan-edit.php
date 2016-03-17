@@ -98,7 +98,7 @@
                         <label for="telepon"><?php _e( 'Telepon', 'arwir' ); ?></label>
                     </th>
                     <td>
-                        <input type="text" name="telepon" id="telepon" class="regular-text" placeholder="<?php echo esc_attr( '', 'arwir' ); ?>" value="<?php echo esc_attr( $item->telepon ); ?>" required="required" />
+                        <input type="text" name="telepon" id="telepon" class="regular-text" placeholder="<?php echo esc_attr( '', 'arwir' ); ?>" value="<?php echo esc_attr( $item->telepon ); ?>" />
                     </td>
                 </tr>
                 <tr class="row-telepon-genggam">

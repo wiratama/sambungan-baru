@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 13, 2016 at 04:10 AM
+-- Generation Time: Mar 17, 2016 at 04:48 AM
 -- Server version: 5.5.39
 -- PHP Version: 5.4.31
 
@@ -26,6 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `palyja_sambungan_baru`
 --
 
+DROP TABLE IF EXISTS `palyja_sambungan_baru`;
 CREATE TABLE IF NOT EXISTS `palyja_sambungan_baru` (
   `id` varchar(9) NOT NULL,
   `nama_lengkap` varchar(255) NOT NULL,
@@ -38,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `palyja_sambungan_baru` (
   `area_kota` varchar(255) NOT NULL,
   `luas_bangunan` int(11) NOT NULL,
   `jumlah_penghuni` int(11) NOT NULL,
-  `telepon` varchar(255) NOT NULL,
+  `telepon` varchar(255) DEFAULT NULL,
   `telepon_genggam` varchar(255) NOT NULL,
   `email` varchar(50) DEFAULT NULL,
   `fungsi_bangunan` varchar(255) NOT NULL,
